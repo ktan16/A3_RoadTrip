@@ -97,7 +97,7 @@ public class RoadTrip {
 		return cityName.contains(city);
 	}
 	
-	private ArrayList<Integer> route(String startingCity, String endingCity, ArrayList<String> attractions) { // takes combines starting city, attractions, and ending city to route
+	private ArrayList<Integer> route(String startingCity, String endingCity, ArrayList<String> attractions) { // combines starting city, attractions, and ending city to route
 		ArrayList<Integer> route = new ArrayList<Integer>();
 		route.add(cityNum.get(cityName.indexOf(startingCity)));
 		if (!attractions.isEmpty()) {
@@ -190,33 +190,33 @@ public class RoadTrip {
 	private ArrayList<String> stackIt(ArrayList<Integer> sortedPath, int [] path) { // takes the stack returned in getPath and converts it to string array list
 		ArrayList<String> finalPath = new ArrayList<String>();
 		
-		for (int i = 0; i < sortedPath.size() - 1; i++) {
-			Stack<String> stack = getPath(sortedPath, path); // get the path from one city to another
-			while(!stack.empty()) { // add each city in path to array list
-				finalPath.add(stack.pop());
-			}
-			sortedPath.remove(0);
+		Stack<String> stack = getPath(sortedPath, path);
+		while(!stack.empty()) {
+			finalPath.add(stack.pop());
 		}
+		
 		return finalPath;
 	}
 	
 	private Stack<String> getPath(ArrayList<Integer> sortedPath, int [] path) { // returns a stacked path to get from start to destination
 		Stack<String> citiesByName = new Stack<String>();
-		int start = sortedPath.get(0); // starting city is the first city in overall sorted path
-		int end = sortedPath.get(1); // destination is second city in overall sorted path
+		int start = sortedPath.get(0); // set starting city
+		int end = sortedPath.get(1); // set ending city
 		ArrayList<Integer> p = new ArrayList<Integer>();
-		while(true) { // paths backwards from end city to start city to find the path
-			if(end == start) { // once start city is reached, add city to path and break
+		while(true) { // traverses backwards from ending city to starting city
+			if(end == start) { // if starting city has been reached
 				p.add(end);
 				break;
-			} else { // add city to path, find the previous city to get to current city
-				p.add(end); 
-				end = path[end];
+			} else {
+				p.add(end); // add city to path
+				end = path[end]; // look for path to city we just added
 			}
 		}
+		
 		for (Integer cityNum : p) {
 			citiesByName.add(cityName.get(cityNum));
 		}
+		
 		return citiesByName;
 	}
 	
@@ -299,12 +299,13 @@ public class RoadTrip {
 			ArrayList<String> finalPath = new ArrayList<String>();
 			int i = cityInputNums.size() - 1;
 			while (i != 0) { // perform Dijkstra to find the shortest path to get from city to city
-				ArrayList<String> sortedPath = r.dijkstra(cityInputNums); // perform Dijkstra to path from first city in list to next
-// 				cityInputNums.remove(0);
+				
+				ArrayList<String> sortedPath = r.dijkstra(cityInputNums);
+				
 				for (int k =0; k < sortedPath.size(); k++) {
 					finalPath.add(sortedPath.get(k));
 				}
-				cityInputNums.remove(0); // remove a city to set the next as new "Starting city"
+				cityInputNums.remove(0); // to set next city as starting city
 				i--;
 			}
 			r.print(finalPath);
