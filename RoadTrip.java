@@ -187,7 +187,7 @@ public class RoadTrip {
 		return finalPath;
 	}
 	
-	private ArrayList<String> stackIt(ArrayList<Integer> sortedPath, int [] path) { // returns a sorted path of where the user should go to get from one city to another
+	private ArrayList<String> stackIt(ArrayList<Integer> sortedPath, int [] path) { // takes the stack returned in getPath and converts it to string array list
 		ArrayList<String> finalPath = new ArrayList<String>();
 		
 		for (int i = 0; i < sortedPath.size() - 1; i++) {
@@ -200,7 +200,7 @@ public class RoadTrip {
 		return finalPath;
 	}
 	
-	private Stack<String> getPath(ArrayList<Integer> sortedPath, int [] path) { // returns a "forwards" path to get from start to destination without sorting nearest attraction
+	private Stack<String> getPath(ArrayList<Integer> sortedPath, int [] path) { // returns a stacked path to get from start to destination
 		Stack<String> citiesByName = new Stack<String>();
 		int start = sortedPath.get(0);
 		int end = sortedPath.get(1);
