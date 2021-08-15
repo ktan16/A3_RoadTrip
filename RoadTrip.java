@@ -191,8 +191,8 @@ public class RoadTrip {
 		ArrayList<String> finalPath = new ArrayList<String>();
 		
 		for (int i = 0; i < sortedPath.size() - 1; i++) {
-			Stack<String> stack = getPath(sortedPath, path);
-			while(!stack.empty()) {
+			Stack<String> stack = getPath(sortedPath, path); // get the path from one city to another
+			while(!stack.empty()) { // add each city in path to array list
 				finalPath.add(stack.pop());
 			}
 			sortedPath.remove(0);
@@ -202,15 +202,15 @@ public class RoadTrip {
 	
 	private Stack<String> getPath(ArrayList<Integer> sortedPath, int [] path) { // returns a stacked path to get from start to destination
 		Stack<String> citiesByName = new Stack<String>();
-		int start = sortedPath.get(0);
-		int end = sortedPath.get(1);
+		int start = sortedPath.get(0); // starting city is the first city in overall sorted path
+		int end = sortedPath.get(1); // destination is second city in overall sorted path
 		ArrayList<Integer> p = new ArrayList<Integer>();
-		while(true) {
-			if(end == start) {
+		while(true) { // paths backwards from end city to start city to find the path
+			if(end == start) { // once start city is reached, add city to path and break
 				p.add(end);
 				break;
-			} else {
-				p.add(end);
+			} else { // add city to path, find the previous city to get to current city
+				p.add(end); 
 				end = path[end];
 			}
 		}
@@ -299,11 +299,12 @@ public class RoadTrip {
 			ArrayList<String> finalPath = new ArrayList<String>();
 			int i = cityInputNums.size() - 1;
 			while (i != 0) { // perform Dijkstra to find the shortest path to get from city to city
-				ArrayList<String> sortedPath = r.dijkstra(cityInputNums);
-				cityInputNums.remove(0);
+				ArrayList<String> sortedPath = r.dijkstra(cityInputNums); // perform Dijkstra to path from first city in list to next
+// 				cityInputNums.remove(0);
 				for (int k =0; k < sortedPath.size(); k++) {
 					finalPath.add(sortedPath.get(k));
 				}
+				cityInputNums.remove(0); // remove a city to set the next as new "Starting city"
 				i--;
 			}
 			r.print(finalPath);
